@@ -83,28 +83,28 @@ function togglePower(){
 
 function setupSoundPlayer(){
 	$('#color1').on('click', function(event) {
-		if(power && !comp){
+		if(power && !comp && player){
 			var audio1 = $('#audio1')[0];
 			audio1.play();
 			playInput = '#color1'; 
 		}
 	});
 	$('#color2').on('click', function(event) {
-		if(power && !comp) {
+		if(power && !comp && player) {
 			var audio2 = $('#audio2')[0];
 			audio2.play(); 
 			playInput = '#color2';
 		}
 	});
 	$('#color3').on('click', function(event) {
-		if(power && !comp) {
+		if(power && !comp && player) {
 			var audio3 = $('#audio3')[0];
 			audio3.play();
 			playInput = '#color3';
 		}		 
 	});
 	$('#color4').on('click', function(event) {
-		if(power && !comp) {
+		if(power && !comp && player) {
 			var audio4 = $('#audio4')[0];
 			audio4.play();
 			playInput = '#color4';
