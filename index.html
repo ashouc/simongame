@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="keywords" content="Alex Shoucri, JavaScript, Simon, Game, jQuery">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simon Game</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Geostar+Fill|Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="inner">
+                <div id="color1" class="green box"></div>
+                <audio id="audio1" src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></audio>
+
+                <div id="color2" class="red box"></div> 
+                <audio id="audio2" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></audio>     
+
+                <div id="color3" class="yellow box"></div> 
+                <audio id="audio3" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></audio>    
+
+                <div id="color4" class="blue box"></div>
+                <audio id="audio4" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
+
+                <div id="center">
+                    <div id="count"><p></p></div>
+                    <button id="power"><i class="fa fa-power-off"></i></button>
+                    <button id="start"><i class="fa fa-play"></i></button>
+                    <button id="strict"><i class="fa fa-gavel"></i></button>
+                </div>
+            </div>
+        </div>
+        <div id="restart" class="hidden"></div>
+        <footer><div>alex.shoucri.2017</div></footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
