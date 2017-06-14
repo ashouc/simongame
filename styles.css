@@ -1,3 +1,4 @@
+/******PAGE SETUP******/
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -10,13 +11,13 @@ html, body {
 	height: 100%;
 	background-color: rgba(46,71,84,1);
 }
-#container {
+.container {
 	height: 100%;
 	width: 100%;
 	text-align: center;
 	position: relative;
 }
-#inner {
+.inner-box {
 	display: inline-block;
 	width: 400px;
 	text-align: center;
@@ -26,6 +27,7 @@ html, body {
 	border-radius: 50%;
 	background-color: rgba(43,47,54,1);
 }
+/******PANEL LAYOUT******/
 .box{
 	display: inline-block;
 	height: 200px;
@@ -35,6 +37,7 @@ html, body {
 .box:hover {
 	cursor: pointer;
 }
+/******PANEL COLORS******/
 .green {
 	border-radius: 200px 0px 0px 0px;
 	-moz-border-radius: 200px 0px 0px 0px;
@@ -77,7 +80,8 @@ html, body {
 .highlight.blue {
 	background-color: rgba(152,158,220,1);
 }
-#center {
+/******CENTER CIRCUIT******/
+.center {
 	z-index: 100;
 	width: 200px;
 	height: 200px;
@@ -90,7 +94,7 @@ html, body {
     background-color: rgba(238,231,188,1);
     text-align: center;
 }
-#count {
+.screen {
 	position: relative;
 	text-align: center;
 	margin: 30px auto 0;
@@ -100,6 +104,13 @@ html, body {
 	border-radius: 2px;
 	background-color: rgba(43,47,54,1);
 }
+.screen p {
+	font-family: 'Geostar Fill', cursive;
+	line-height: 50px;
+	font-size: 40px;
+	color: rgba(255,50,50,1);
+}
+/******CENTER BUTTONS******/
 .fa.fa-ban{
     position: relative;
     bottom: 36px;
@@ -110,12 +121,6 @@ html, body {
     height: 40px;
     color: rgba(255,50,50,1);
     border-radius: 2px;
-}
-#count p {
-	font-family: 'Geostar Fill', cursive;
-	line-height: 50px;
-	font-size: 40px;
-	color: rgba(255,50,50,1);
 }
 button {
 	width: 20px;
@@ -134,34 +139,26 @@ i {
 	width: 11px;
 	height: 11px;
 }
-#power {
-	background-color: rgba(91,199,149,1); /*Green*/
+div.button button:nth-child(1) { 
+	background-color: rgba(91,199,149,1); /*Green: power button*/
 	padding-right: 1px;
-	/*padding-bottom: 1px;*/
 }
-#start {
-	background-color: rgba(238,96,96,1); /*Red*/
+div.button button:nth-child(2) {
+	background-color: rgba(238,96,96,1); /*Red: start button*/
 	padding-left: 3px;
 }
-#strict {
-	background-color: rgba(240,176,77,1); /*Yellow*/
+div.button button:nth-child(3) {
+	background-color: rgba(240,176,77,1); /*Yellow: stricy button*/
 	padding-bottom: 2px;
 }
-#restart {
-	text-align: center;
-	font-family: 'Montserrat Subrayada', sans-serif;
-	font-weight: bold;
-}
-#error{
-	text-align: center;
-}
-.error{
-	bottom: 250px;
-}
+/****** END OF GAME POP-UP ******/
 .hidden {
 	display: none;
 }
 .restart {
+	text-align: center;
+	font-family: 'Montserrat Subrayada', sans-serif;
+	font-weight: bold;
 	display: inline-block;
     position: fixed;
     bottom: 50px;

@@ -64,6 +64,9 @@ function togglePower(){
 			return;
 		} 
 		if(power) {
+			if(strict){
+				$('#count').css('background-color','rgba(43,47,54,1)');
+			}
 			$('#count p').html(' ');
 			count = 0;
 			index = 0;
@@ -221,8 +224,10 @@ function isPatternMatched(){ // Compare with computer pattern (patWords)
 	if(playInput === patIds[index-1] && index < count) {
 		return;
 	}
-	if (playInput === patIds[index-1] && index === count && index === 20) {
-		return endOfGame();
+	if (playInput === patIds[index-1] && index === count && index === 2) {
+		return setTimeout(function(){
+			endOfGame();
+		},1000);
 	}
 	if(playInput !== patIds[index-1] && !strict) {
 		return error();
