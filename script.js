@@ -9,6 +9,7 @@ var playInput;
 var strict = false;
 var power = false;
 var start = false;
+var gameEnded = false;
 var player = false; //Turns to true when player successfully reproduces comp pattern
 var comp = false; //Turns to true when it's the computer's turn
 
@@ -23,6 +24,7 @@ function setupGame(){
 	playerInput('#color3');
 	playerInput('#color4');
 	startButton();
+	restartButton();
 	strictButton();
 	togglePower();
 	setupSoundPlayer();
@@ -35,8 +37,18 @@ function startButton(){
 			return computerInput();
 		}
 		if(power && start){
+			$('#restart').removeClass('restart').addClass('hidden').html('Restart?');
 			return restartGame();
 		}
+	});
+}
+
+function restartButton(){
+	$('#restart').on('click',function(event){
+		if(gameEnded === true && event.target.innerHTML === 'Restart?') {
+			$('#restart').removeClass('restart').addClass('hidden');
+			restartGame();
+		}	
 	});
 }
 
@@ -174,6 +186,7 @@ function computerColoring(id,time){
 		setTimeout(function(){
 			$(id).removeClass('highlight');
 		},time * 1000);
+		console.log('color1');
 		return;
 	}
 	if(id === '#color2') {
@@ -181,6 +194,7 @@ function computerColoring(id,time){
 		setTimeout(function(){
 			$(id).removeClass('highlight');
 		},time * 1000);
+		console.log('color2');
 		return;
 	}
 	if(id === '#color3') {
@@ -188,6 +202,7 @@ function computerColoring(id,time){
 		setTimeout(function(){
 			$(id).removeClass('highlight');
 		},time * 1000);
+		console.log('color3');
 		return;
 	}
 	if(id === '#color4') {
@@ -195,6 +210,7 @@ function computerColoring(id,time){
 		setTimeout(function(){
 			$(id).removeClass('highlight');
 		},time * 1000);
+		console.log('color4');
 		return;
 	}
 }
@@ -226,9 +242,9 @@ function isPatternMatched(){ // Compare with computer pattern (patWords)
 	if(playInput === patIds[index-1] && index < count) {
 		return;
 	}
-	if (playInput === patIds[index-1] && index === count && index === 3) {
-		playerTurn();
+	if (playInput === patIds[index-1] && index === count && index === 20) {
 		return setTimeout(function(){
+			playerTurn();
 			endOfGame();
 		},1000);
 	}
@@ -265,6 +281,7 @@ function restartGame(){
 	playInput;
 	player = false;
 	comp = false; 
+	gameEnded = false;
 
 	computerInput();
 }
@@ -293,15 +310,9 @@ function error(){
 }
 
 function endOfGame(){
-	player = false;
+	gameEnded = true;
 	$('#restart').removeClass('hidden').addClass('restart').html('Restart?');
 
-	$('#restart').on('click',function(event){
-		if(event.target.innerHTML === 'Restart?') {
-			$('#restart').removeClass('restart').addClass('hidden');
-			restartGame();
-		}	
-	});
 }
 
 function extendRandomPattern(){
