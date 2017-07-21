@@ -115,6 +115,20 @@ function setupSoundPlayer(){
 	}); 	
 }
 
+function setupPad(id){
+	$(id)
+	.on('mousedown',function() {
+		if(power && player) { //add player
+			$(this).addClass('highlight');
+		}	
+	})
+	.on('mouseup',function() {
+		if(power && player) {
+			$(this).removeClass('highlight');
+		}
+	});	
+}
+
 function computerAudio(){
 	if(patIds[idIndex] === '#color1') {
 		var audio1 = $('#audio1')[0];
@@ -185,18 +199,6 @@ function computerColoring(id,time){
 	}
 }
 
-function setupPad(id){
-	$(id)
-	.on('mousedown',function() {
-		if(power) {
-			$(this).addClass('highlight');
-		}	
-	})
-	.on('mouseup',function() {
-		$(this).removeClass('highlight');
-	});	
-}
-
 function playerInput(id){
 	$(id).on('click', function(event){
 		if(player){
@@ -224,12 +226,13 @@ function isPatternMatched(){ // Compare with computer pattern (patWords)
 	if(playInput === patIds[index-1] && index < count) {
 		return;
 	}
-	if (playInput === patIds[index-1] && index === count && index === 2) {
+	if (playInput === patIds[index-1] && index === count && index === 3) {
+		playerTurn();
 		return setTimeout(function(){
 			endOfGame();
 		},1000);
 	}
-	if(playInput !== patIds[index-1] && !strict) {
+	if(playInput !== patIds[index-1] && !strict && player) {
 		return error();
 	}
 	if(playInput === patIds[index-1] && index === count) {
@@ -249,7 +252,7 @@ function computerInput(){
 	});
 	computerAudio();
 	comp = false; //End of computer's turn
-	playerTurn();
+	player = true;
 	return;
 }
 
@@ -267,6 +270,7 @@ function restartGame(){
 }
 
 function error(){
+	player = false;
 	setTimeout(function(){
 		$('#count p').html('<i class="fa fa-ban fa-3x"></i>')
 		$('.fa.fa-ban').css('display','inline-block');
@@ -277,7 +281,10 @@ function error(){
 		$('.fa.fa-ban').css('display','none');
 		$('#count p').html(count);
 		if(!strict) {
-			return computerAudio();
+			computerAudio();
+			setTimeout(function(){
+				player = true;
+			}, 1000 * idIndex);			
 		}
 		if(strict) {
 			return restartGame();
