@@ -10,8 +10,7 @@ var strict = false;
 var power = false;
 var start = false;
 var gameEnded = false;
-var player = false; //Turns to true when player successfully reproduces comp pattern
-var comp = false; //Turns to true when it's the computer's turn
+var player = false; // Turns to true when it's the player's turn
 
 
 function setupGame(){
@@ -32,6 +31,11 @@ function setupGame(){
 
 function startButton(){
 	$('#start').on('click', function(event){
+    if(strict) {
+      strict = false;
+			$('#count').css('background-color','rgba(43,47,54,1)');
+			return restartGame();
+    }
 		if(power && !start){
 			start = true;
 			return computerInput();
@@ -48,7 +52,7 @@ function restartButton(){
 		if(gameEnded === true && event.target.innerHTML === 'Restart?') {
 			$('#restart').removeClass('restart').addClass('hidden');
 			restartGame();
-		}	
+		}
 	});
 }
 
@@ -70,11 +74,11 @@ function strictButton(){
 function togglePower(){
 	$('#power').on('click', function(event) {
 		if(!power) {
-			count = 0; 
+			count = 0;
 			$('#count p').html(count);
 			power = true;
 			return;
-		} 
+		}
 		if(power) {
 			if(strict){
 				$('#count').css('background-color','rgba(43,47,54,1)');
@@ -90,7 +94,6 @@ function togglePower(){
 			power = false;
 			start = false;
 			player = false;
-			comp = false;			
 			return;
 		}
 	});
@@ -98,47 +101,47 @@ function togglePower(){
 
 function setupSoundPlayer(){
 	$('#color1').on('click', function(event) {
-		if(power && !comp && player){
+		if(power && player){
 			var audio1 = $('#audio1')[0];
 			audio1.play();
-			playInput = '#color1'; 
+			playInput = '#color1';
 		}
 	});
 	$('#color2').on('click', function(event) {
-		if(power && !comp && player) {
+		if(power && player) {
 			var audio2 = $('#audio2')[0];
-			audio2.play(); 
+			audio2.play();
 			playInput = '#color2';
 		}
 	});
 	$('#color3').on('click', function(event) {
-		if(power && !comp && player) {
+		if(power && player) {
 			var audio3 = $('#audio3')[0];
 			audio3.play();
 			playInput = '#color3';
-		}		 
+		}
 	});
 	$('#color4').on('click', function(event) {
-		if(power && !comp && player) {
+		if(power && player) {
 			var audio4 = $('#audio4')[0];
 			audio4.play();
 			playInput = '#color4';
 		}
-	}); 	
+	});
 }
 
 function setupPad(id){
 	$(id)
 	.on('mousedown',function() {
-		if(power && player) { //add player
+		if(power && player) {
 			$(this).addClass('highlight');
-		}	
+		}
 	})
 	.on('mouseup',function() {
 		if(power && player) {
 			$(this).removeClass('highlight');
 		}
-	});	
+	});
 }
 
 function computerAudio(){
@@ -149,7 +152,7 @@ function computerAudio(){
 			computerColoring('#color1', audio1.duration);
 			idIndex++;
 			return computerAudio();
-		},1000);			
+		},1000);
 	} else if(patIds[idIndex] === '#color2') {
 		var audio2 = $('#audio2')[0];
 		setTimeout(function(){
@@ -157,7 +160,7 @@ function computerAudio(){
 			computerColoring('#color2', audio2.duration);
 			idIndex++;
 		return computerAudio();
-		},1000);			
+		},1000);
 	} else if(patIds[idIndex] === '#color3') {
 		var audio3 = $('#audio3')[0];
 		setTimeout(function(){
@@ -176,8 +179,8 @@ function computerAudio(){
 		},1000);
 	} else if (!patIds[idIndex]){
 		idIndex = 0;
-		return;
-	}	
+    player = true;
+	}
 }
 
 function computerColoring(id,time){
@@ -222,7 +225,7 @@ function playerInput(id){
 			playInput = id;
 			isPatternMatched(index);
 		}
-		return;		
+		return;
 	});
 }
 
@@ -252,8 +255,11 @@ function isPatternMatched(){ // Compare with computer pattern (patWords)
 		return error();
 	}
 	if(playInput === patIds[index-1] && index === count) {
-		playerTurn();
-		return computerInput();
+    return setTimeout(function(){
+      playerTurn();
+  		computerInput();
+    },0)
+
 	}
 	if(playInput !== patIds[index-1] && strict) {
 		return error();
@@ -261,15 +267,12 @@ function isPatternMatched(){ // Compare with computer pattern (patWords)
 }
 
 function computerInput(){
-	comp = true;
-	extendRandomPattern();	
+  player = false;
+	extendRandomPattern();
 	patIds = pattern.map(function(val) {
 		return numberToId(val);
 	});
 	computerAudio();
-	comp = false; //End of computer's turn
-	player = true;
-	return;
 }
 
 function restartGame(){
@@ -280,7 +283,6 @@ function restartGame(){
 	patIds = [];
 	playInput;
 	player = false;
-	comp = false; 
 	gameEnded = false;
 
 	computerInput();
@@ -292,20 +294,17 @@ function error(){
 		$('#count p').html('<i class="fa fa-ban fa-3x"></i>')
 		$('.fa.fa-ban').css('display','inline-block');
 		idIndex = 0;
-		index = 0;		
+		index = 0;
 	}, 1000);
 	setTimeout(function(){
 		$('.fa.fa-ban').css('display','none');
 		$('#count p').html(count);
 		if(!strict) {
 			computerAudio();
-			setTimeout(function(){
-				player = true;
-			}, 1000 * idIndex);			
 		}
 		if(strict) {
 			return restartGame();
-		}		
+		}
 	},2000);
 }
 
@@ -322,7 +321,7 @@ function extendRandomPattern(){
 	return;
 }
 
-function numberToId(num) { 
+function numberToId(num) {
 	switch(true) {
 		case num === 1:
 		return '#color1';
