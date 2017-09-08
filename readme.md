@@ -12,7 +12,7 @@ The objective of the game is to successfully repeat a random pattern showed on t
 ### Challenges
 The main challenge encountered while developing this game was to make sure that the order of execution of each step in a pattern was respected (time wise) while the overall execution of the program remained asynchronous.
 
-## Functionalities
+## Features
 Several functionalities are found throughout the game.
 
 1. **Power button**
